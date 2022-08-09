@@ -1,0 +1,122 @@
+[
+    {
+        "name": "How to get into : Björk",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie sagittis nulla ac sagittis. Proin interdum nunc vitae egestas sagittis. Nam convallis eu massa non tincidunt.",
+        "id": "12",
+        "nodes": [
+            {
+                "id": "123",
+                "album": {
+                    "name": "Post",
+                    "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam lobortis erat ante, eu efficitur massa rutrum sed.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b2736aba91ac61162caeeef14460"
+                }
+            },
+            {
+                "id": "1234",
+                "album": {
+                    "name": "Vespertine",
+                    "description": "Praesent odio enim, pulvinar a nisi ut, facilisis egestas nisl. Proin congue id ligula sit amet tempor.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b273bc31229deb79f896eb9fee84"
+                }
+            },
+            {
+                "id": "12345",
+                "album": {
+                    "name": "Biophilia",
+                    "description": "Donec egestas ut dolor quis eleifend. Suspendisse vel turpis et mauris scelerisque egestas.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b2739de962d2dc5b05f4133fda74"
+                }
+            },
+            {
+                "id": "123456",
+                "album": {
+                    "name": "Medúlla",
+                    "description": "Quisque semper sem sed erat convallis, ut venenatis mauris accumsan. Phasellus non neque mi.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b2734f70220d934183ce2db16d6a"
+                }
+            },
+            {
+                "id": "1234567",
+                "album": {
+                    "name": "Volta",
+                    "description": "Sed lorem nulla, consectetur vitae ultricies eu, mollis ut arcu. Sed tempus varius est, quis ultricies turpis dapibus id.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b2731e330b00f02804de2bdd9105"
+                }
+            },
+            {
+                "id": "12345678",
+                "album": {
+                    "name": "Homogenic",
+                    "description": "Pellentesque risus odio, commodo vitae aliquet nec, accumsan vel odio. In tincidunt orci vitae nibh pharetra pharetra.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b273b6f50e46dac445dff914a56f"
+                }
+            },
+            {
+                "id": "123456789",
+                "album": {
+                    "name": "Debut",
+                    "description": "Sed hendrerit mi vitae risus vulputate sollicitudin. In pharetra magna nisi. Integer molestie mollis nunc sed tempus.",
+                    "coverUrl": "https://i.scdn.co/image/ab67616d0000b2736a035608384de03ffe9930a3"
+                }
+            }
+        ],
+        "links": [
+            {
+                "name": "It was perfect!",
+                "from": "123",
+                "to": "123456789"
+            },
+            {
+                "name": "More electronic instrumentation",
+                "from": "123",
+                "to": "1234"
+            },
+            {
+                "name": "I want minimalism",
+                "from": "1234",
+                "to": "12345"
+            },
+            {
+                "name": "More passion and row emotions",
+                "from": "1234",
+                "to": "123456789"
+            },
+            {
+                "name": "More passion and row emotions",
+                "from": "12345678",
+                "to": "123456789"
+            },
+            {
+                "name": "I like acapella and experimentation",
+                "from": "12345",
+                "to": "123456"
+            },
+            {
+                "name": "I like acapella and experimentation",
+                "from": "1234",
+                "to": "123456"
+            },
+            {
+                "name": "More 'traditional' instrumentation (I want strings!)",
+                "from": "123",
+                "to": "12345678"
+            },
+            {
+                "name": "I like acapella and experimentation",
+                "from": "123456",
+                "to": "123456"
+            },
+            {
+                "name": "I like acapella and experimentation",
+                "from": "1234567",
+                "to": "123456"
+            },
+            {
+                "name": "More 'pop' influences",
+                "from": "12345678",
+                "to": "1234567"
+            }
+        ]
+    }
+]

@@ -1,0 +1,12 @@
+<div class="periple-container">
+    <ng-container *ngIf="(periple$ | async) as periple">
+        <h1>{{periple.name}}</h1>
+        <button (click)="startPath()" type="button" style="margin-top: 1rem">Start path</button>
+        <ul>
+            <li *ngFor="let node of periple.nodes" style="margin-top: 1rem;">
+                <h2>{{node.album.name}}</h2>
+                <img [src]="node.album.coverUrl" style="width: 200px;">
+            </li>
+        </ul>
+    </ng-container>
+</div>
