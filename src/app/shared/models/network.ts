@@ -13,6 +13,8 @@ export type NetworkNode = {
     album: Album;
 }
 
+export type PositionnedNode = NetworkNode & {x: number, y: number};
+
 export type NetworkLink = {
     from: string;
     to: string;

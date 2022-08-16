@@ -1,12 +1,17 @@
 <div class="periple-container">
     <ng-container *ngIf="(periple$ | async) as periple">
-        <h1>{{periple.name}}</h1>
-        <button (click)="startPath()" type="button" style="margin-top: 1rem">Start path</button>
-        <ul>
+        <div class="periple-header">
+            <h1 class="per-title">{{periple.name}}</h1>
+            <button class="per-button" (click)="startPath()" type="button">Start path</button>
+        </div>
+        <div class="periple-network">
+            <app-periple-network [network]="periple"></app-periple-network>
+        </div>
+        <!-- <ul>
             <li *ngFor="let node of periple.nodes" style="margin-top: 1rem;">
-                <h2>{{node.album.name}}</h2>
+                <h2 class="per-title">{{node.album.name}}</h2>
                 <img [src]="node.album.coverUrl" style="width: 200px;">
             </li>
-        </ul>
+        </ul> -->
     </ng-container>
 </div>

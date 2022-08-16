@@ -1,0 +1,20 @@
+.periple-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+
+    .periple-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        padding: 0 10px;
+    }
+
+    .periple-network {
+        width: 100%;
+        flex: 1;
+    }
+}

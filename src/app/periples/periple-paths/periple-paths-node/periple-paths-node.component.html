@@ -1,1 +1,15 @@
-<p>periple-paths-node works!</p>
+<div class="periple-paths-node-container">
+    <ng-container *ngIf="(periple$ | async) as periple">
+        <h1 class="per-title">{{periple.name}}</h1>
+        <ng-container *ngIf="(peripleNode$ | async) as node">
+            <h2 class="per-title">{{node.album.name}}</h2>
+            <img [src]="node.album.coverUrl" style="width: 200px;">
+            <ul *ngIf="(peripleLinksOut$ | async) as links">
+            
+                <li *ngFor="let link of links">
+                    <a [routerLink]="['../' + link.to]">{{link.name}}</a>
+                </li>
+            </ul>
+        </ng-container>
+    </ng-container>
+</div>

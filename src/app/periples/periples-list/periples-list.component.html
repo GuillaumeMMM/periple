@@ -1,6 +1,6 @@
-<h1>Périples list</h1>
+<h1 class="per-title">Périples list</h1>
 <ul>
     <li *ngFor="let periple of (periples$ | async)">
-        <a [routerLink]="[periple.id]">{{periple.name}}</a>
+        <a [routerLink]="[periple.id]" class="per-link">{{periple.name}}</a>
     </li>
 </ul>

@@ -9,6 +9,7 @@ import { PeriplesListComponent } from './periples/periples-list/periples-list.co
 import { PeripleProfileComponent } from './periples/periple-profile/periple-profile.component';
 import { PeriplePathsComponent } from './periples/periple-paths/periple-paths.component';
 import { PeriplePathsNodeComponent } from './periples/periple-paths/periple-paths-node/periple-paths-node.component';
+import { PeripleNetworkComponent } from './periples/periple-profile/periple-network/periple-network.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PeriplePathsNodeComponent } from './periples/periple-paths/periple-path
     PeriplesListComponent,
     PeripleProfileComponent,
     PeriplePathsComponent,
-    PeriplePathsNodeComponent
+    PeriplePathsNodeComponent,
+    PeripleNetworkComponent,
   ],
   imports: [
     BrowserModule,
