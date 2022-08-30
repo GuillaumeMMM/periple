@@ -9,24 +9,22 @@ export class NetworkService {
 
   constructor() { }
 
-  public dragstarted(that: SVGRectElement, event: MouseEvent, d: any) {
-    const element: SVGRectElement = this as any;
+  public dragstarted = (element: any): void => {
     d3.select(element).raise().classed("dragging", true);
   }
 
-  public dragged = (svg: d3.Selection<any, any, any, any>, event: DragEvent, datum: PositionnedNode) => {
-    const element: HTMLElement = svg.select(`.per-nodes`).select(`#_${datum.id}`).node() as HTMLElement;
+  public dragged = (element: any, event: DragEvent) => {
+    console.log(event.x)
     d3.select(element)
     .attr("x", (d: any) => {
-      return d.x = event.x;
+      return d.x = +event.x;
     })
     .attr("y", (d: any) => {
-      return d.y = event.y;
+      return d.y = +event.y;
     });
   }
 
-  public dragended(event: MouseEvent, d: any) {
-    const element: SVGRectElement = this as any;
+  public dragended = (element: any) => {
     d3.select(element).classed("dragging", false);
   }
 

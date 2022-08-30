@@ -1,3 +1,3 @@
-<div class="periple-network-container">
-    <div id="canvas" style="height:100%"></div>
+<div [ngClass]="{'periple-network-container': true, 'editing': editing}">
+    <div id="canvas" style="height:100%" [title]="editing ? 'Click to add a media' : ''"></div>
 </div>
