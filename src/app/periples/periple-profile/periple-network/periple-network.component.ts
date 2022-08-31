@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 import { NetworkService } from 'src/app/services/network.service';
-import { NetworkLink, NetworkNode, Periple, PositionnedNode } from 'src/app/shared/models/network';
+import { NetworkLink, NetworkNode, Periple } from 'src/app/shared/models/network';
 
 @Component({
   selector: 'app-periple-network',
@@ -15,11 +15,10 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  @Input() network: Periple | null = null;
+  @Input() network: Periple = {id: '', links: [], nodes: [], name: ''};
   @Input() editing: boolean = true;
 
   private svg: d3.Selection<any, any, any, any> = null as any;
-  private positionnedNodes: PositionnedNode[] = [];
   public width: number = 0;
   public height: number = 0;
   public MEDIA_SIZE: number = 80;
@@ -31,8 +30,6 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['network'] && changes['network']['currentValue']) {
-
-      this.positionnedNodes = this.setInitialPosition(this.network?.nodes || []);
       this.initDragHandler();
 
       setTimeout(() => {
@@ -46,16 +43,6 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
         this.updateLinks();
       });
     }
-  }
-
-  private setInitialPosition = (nodes: NetworkNode[]): PositionnedNode[] => {
-    return nodes.map(node => {
-      return {
-        ...node,
-        x: Math.random() * 500,
-        y: Math.random() * 500,
-      }
-    })
   }
 
   private initSvg = (): void => {
@@ -78,9 +65,9 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
       .attr('x', 0).attr('y', 0).attr('pointer-events', 'visible')
       .attr('class', 'periple-network-background')
       .on('click', (event: PointerEvent) => {
-        const newNode: PositionnedNode = this.networkService.createNode(event);
-        const newLink: NetworkLink = this.networkService.createLink(newNode.id, this.positionnedNodes[0].id);
-        this.positionnedNodes.push(newNode);
+        const newNode: NetworkNode = this.networkService.createNode(event);
+        const newLink: NetworkLink = this.networkService.createLink(newNode.id, this.network.nodes[0].id);
+        this.network?.nodes.push(newNode);
         this.network?.links.push(newLink);
 
         this.updateNodes();
@@ -93,10 +80,10 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
       .on('start', (event, d) => {
         this.networkService.dragstarted(this.nodesGroup?.select(`.per-node#_${d.id}`).node());
       })
-      .on('drag', (event: DragEvent, d: PositionnedNode) => {
-        const newPosition: { x: number, y: number } = { x: event.x, y: event.y };
-        d.x = event.x;
-        d.y = event.y;
+      .on('drag', (event: any, d: NetworkNode) => {
+        const newPosition: { x: number, y: number } = { x: d.position.x + event.dx, y: d.position.y + event.dy };
+        d.position.x = newPosition.x;
+        d.position.y = newPosition.y;
         this.networkService.dragged(this.nodesGroup?.select(`.per-node#_${d.id}`).node(), newPosition);
         this.updateLinks();
       })
@@ -106,21 +93,37 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
   }
 
   private updateNodes = (): void => {
-    this.nodesGroup?.selectAll('.per-node').data((this.positionnedNodes || []))
+    this.nodesGroup?.selectAll('.per-node').data((this.network?.nodes || []))
       .join(
         function (enter) {
-          return enter.append('foreignObject').attr('class', 'per-node').attr('id', d => `_${d.id}`)
-            .attr('x', d => `${d.x}px`).attr('y', d => `${d.y}px`)
-            .append("xhtml:div")
-            .html(d => `<div class="per-node-html-container"><img src="${d.album.coverUrl}"></div>`);
+          const foreignObject = enter.append('foreignObject').attr('class', 'per-node').attr('id', d => `_${d.id}`)
+            .attr('x', d => `${d.position.x}px`).attr('y', d => `${d.position.y}px`)
+          
+          foreignObject.append("xhtml:div")
+            .html(d => `
+            <div class="per-node-html-container" id="node-html-container">
+              <img src="${d.album.coverUrl}">
+            </div>`);
+
+          return foreignObject;
         },
         function (update) {
           return update.select('per-node')
-            .attr('x', d => `${d.x}px`).attr('y', d => `${d.y}px`);
+            .attr('x', d => `${d.position.x}px`).attr('y', d => `${d.position.y}px`);
         }
       ).call(
         this.dragHandler
       );
+      this.nodesGroup?.selectAll('.per-node').each((d, i, selection) => {
+        const deleteButton = document.createElement('button');
+        deleteButton.appendChild(document.createTextNode('delete'));
+        deleteButton.setAttribute('type', 'button');
+        deleteButton.classList.add('per-node-delete');
+        deleteButton.addEventListener('click', () => {
+          this.deleteNode((d as any).id);
+        });
+        (selection[i] as HTMLElement)?.querySelector('#node-html-container')?.appendChild(deleteButton);
+      });
   }
 
   private updateLinks = (): void => {
@@ -128,9 +131,14 @@ export class PeripleNetworkComponent implements OnInit, OnChanges {
       .append('line').attr('class', 'per-link');
 
     this.svg.select('.per-links').selectAll('.per-link')
-      .attr('x1', (d: any) => `${this.networkService.getLinkNodes(this.positionnedNodes, d).from?.x}px`)
-      .attr('x2', (d: any) => `${this.networkService.getLinkNodes(this.positionnedNodes, d).to?.x}px`)
-      .attr('y1', (d: any) => `${this.networkService.getLinkNodes(this.positionnedNodes, d).from?.y}px`)
-      .attr('y2', (d: any) => `${this.networkService.getLinkNodes(this.positionnedNodes, d).to?.y}px`)
+      .attr('x1', (d: any) => `${this.networkService.getLinkNodes(this.network.nodes, d).from?.position?.x}px`)
+      .attr('x2', (d: any) => `${this.networkService.getLinkNodes(this.network.nodes, d).to?.position?.x}px`)
+      .attr('y1', (d: any) => `${this.networkService.getLinkNodes(this.network.nodes, d).from?.position?.y}px`)
+      .attr('y2', (d: any) => `${this.networkService.getLinkNodes(this.network.nodes, d).to?.position?.y}px`)
+  }
+
+  private deleteNode = (nodeId: string) => {
+    this.network.nodes = this.network.nodes.filter(n => n.id !== nodeId);
+    this.updateNodes();
   }
 }

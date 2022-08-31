@@ -2,6 +2,7 @@
     <ng-container *ngIf="(periple$ | async) as periple">
         <div class="periple-header">
             <h1 class="per-title">{{periple.name}}</h1>
+            <button class="per-button" (click)="savePeriple(periple)" type="button">Save</button>
             <button class="per-button" (click)="startPath()" type="button">Start path</button>
         </div>
         <div class="periple-network">

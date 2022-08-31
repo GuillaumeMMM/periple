@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
-import { NetworkLink, NetworkNode, PositionnedNode } from '../shared/models/network';
+import { NetworkLink, NetworkNode } from '../shared/models/network';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -28,22 +28,22 @@ export class NetworkService {
     d3.select(element).classed("dragging", false);
   }
 
-  public getLinkNodes = (nodes: PositionnedNode[], link: NetworkLink): {from: PositionnedNode | undefined, to: PositionnedNode | undefined} => {
+  public getLinkNodes = (nodes: NetworkNode[], link: NetworkLink): {from: NetworkNode | undefined, to: NetworkNode | undefined} => {
     return {
       from: (nodes || []).find(n => n.id === link.from),
       to: (nodes || []).find(n => n.id === link.to),
     }
   }
 
-  public createNode = (event: PointerEvent): PositionnedNode => {
+  public createNode = (event: PointerEvent): NetworkNode => {
     const id: string = uuidv4();
-    const newNode: PositionnedNode = {
+    const newNode: NetworkNode = {
       album: {
         name: 'Unknown',
         coverUrl: 'https://i.scdn.co/image/ab67616d00001e0285e087e2715d317c33f71a31'
       },
       id: id,
-      x: event.offsetX, y: event.offsetY
+      position: {x: event.offsetX, y: event.offsetY}
     }
     return newNode;
   }

@@ -59,6 +59,11 @@ button.per-button {
         border-radius: 5px;
 
         .per-node-html-container {
+            position: relative;
+            .per-node-delete {
+                position: absolute;
+                top: 0;
+            }
             img {
                 width: 80px;
                 height: 80px;
